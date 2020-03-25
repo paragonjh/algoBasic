@@ -5,24 +5,24 @@ using namespace std;
 
 char sArr1[101];
 char sArr2[101];
-int alpha_upper1[25];
-int alpha_lower1[25];
-int alpha_upper2[25];
-int alpha_lower2[25];
+int alpha_upper1[26];
+int alpha_lower1[26];
+int alpha_upper2[26];
+int alpha_lower2[26];
 
 bool ana()
 {
 	int bRet = true;
-	for(int i = 0; i < 25; i++){
+	for(int i = 0; i < 26; i++){
 		cout << alpha_upper1[i] << " ";
 	}
 	cout << "\n";
-	for(int i = 0; i < 25; i++){
+	for(int i = 0; i < 26; i++){
 		cout << alpha_upper2[i] << " ";
 	}
 	cout << "\n";
 	
-	for(int i = 0; i < 25; i++){
+	for(int i = 0; i < 26; i++){
 		if(alpha_upper1[i] != alpha_upper2[i])
 			return false;
 		if(alpha_lower1[i] != alpha_lower2[i])
