@@ -42,9 +42,6 @@ void DFS(int level){
 	isMinus[level] = false;
 	DFS(level+1);
 	
-	checkArr[level] = false;
-	isMinus[level] = true;
-	DFS(level+1);
 }
 
 int main() {
@@ -60,3 +57,4 @@ int main() {
 	else cout << "NO";
 	return 0;
 }
+
