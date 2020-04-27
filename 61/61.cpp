@@ -1,47 +1,20 @@
 #include <iostream>
 using namespace std;
 int N, M = 0;
-int arr[10];
-bool checkArr[10] = {false, };
-bool isMinus[10] = {false, };
-bool isFinished = false;
+int arr[10] = {0, };
 
-void DFS(int level){
-	if(isFinished)
-		return;
-		
-	if(level > N) {
-		int sum = 0;
-		for(int i = 0; i < N; i++)
-		{
-			if(checkArr[i] == true)
-			{
-				int num = 0;
-				if(isMinus[i] == true){
-					num = -1*arr[i];
-				}
-				else
-					num = arr[i];
-				sum += num;
-			}
+int cnt = 0;
+void DFS(int level, int val){
+	if(level >= N) {
+		if(val == M) {
+			cnt++;
 		}
-		if(sum == M)
-			isFinished = true;
 		return;
 	}
 	
-	checkArr[level] = true;
-	isMinus[level] = false;
-	DFS(level+1);
-
-	checkArr[level] = true;
-	isMinus[level] = true;
-	DFS(level+1);
-	
-	checkArr[level] = false;
-	isMinus[level] = false;
-	DFS(level+1);
-	
+	DFS(level+1, val + arr[level]);
+	DFS(level+1, val - arr[level]);
+	DFS(level+1, val);
 }
 
 int main() {
@@ -51,10 +24,9 @@ int main() {
 	for(int i = 0; i < N; i++){
 		cin >> arr[i];
 	}
-	DFS(0);
-	
-	if(isFinished) cout << "YES";
-	else cout << "NO";
+	DFS(0, 0);
+	if(cnt  == 0) cnt = -1;
+	cout << cnt << endl;
 	return 0;
 }
 
