@@ -45,11 +45,13 @@ int main() {
 		}
 	}
 	
-	for(int i = 1; i <= 7; i++) {
-		for(int j = 1; j <=7; j++) {
-			cout << map[i][j] << " ";
-		}
-		cout << endl;
-	}	
+	//for(int i = 1; i <= 7; i++) {
+	//	for(int j = 1; j <=7; j++) {
+	//		cout << map[i][j] << " ";
+	//	}
+	//	cout << endl;
+	//}	
+	cout << map[7][7];
 	return 0;
 }
+
