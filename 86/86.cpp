@@ -1,76 +1,74 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <climits>
 using namespace std;
 
-class Node
+int N, M;
+
+class POS
 {
 public:
-	Node (int _x, int _y) : x(_x), y(_y) {}; 
-	int x;
-	int y;
-	int distance;
-	int calcDistance(Node node){
-		int retX = x-node.x;
-		if (retX < 0)
-			retX = retX * -1;
-		int retY = y-node.y;
-		if(retY < 0)
-			retY = retY * -1;
-		return retX + retY;
-	}
+    POS(int _x, int _y): x(_x), y(_y) {};
+    int x;
+    int y;
 };
-
-vector<Node> house;
-vector<Node> pizza;
+int calcDistance(POS a, POS b)
+{
+    return abs(a.x-b.x) + abs(a.y-b.y);
+}
+vector<POS> house;
+vector<POS> pizza;
 
 int main() {
-	// your code goes here
-	int N, M = 0;
-	int val = 0;
-	cin >> N >> M;
-	for(int i = 0; i < N; i++) {
-		for(int j = 0; j < N; j++) {
-			cin >> val;
-			if(val == 1) {
-				//house
-				house.push_back(Node(j,i));
-			} else if(val == 2) {
-				//pizza
-				pizza.push_back(Node(j,i));
-			}
-		}
-	}
-	
-	vector<int> selectPizza;
-	for(int i = 0; i < pizza.size()-M; i++) {
-		selectPizza.push_back(0);
-	}
-	for(int i = 0; i < M; i++) {
-		selectPizza.push_back(1);
-	}
-	int minDistance = 999999;
-	do {
-		for(int i = 0; i < selectPizza.size(); i++)
-		{
-			if(selectPizza[i]) {
-				//cout << i << " ";
-				for(int j = 0; j < house.size(); j++){
-					int distance = house[j].calcDistance(pizza[i]);
-					//cout << "pizza shop:("<<pizza[i].y <<","<< pizza[i].x << ") house:(" <<house[j].y<<","<<house[j].x <<") distance:"<<distance<<endl;
-					if(distance < house[j].distance)
-						house[j].distance = distance;
-				}
-			}
-		}
-		//cout << endl;
-		int sumDistance = 0;
-		for(int i = 0; i < house.size(); i++) {
-			sumDistance += house[i].distance;
-		}
-		if(sumDistance < minDistance)
-			minDistance = sumDistance;
-	} while(next_permutation(selectPizza.begin(), selectPizza.end()));
-	cout << minDistance;
-	return 0;
+    // your code goes here
+    cin >> N >> M;
+    int num = 0;
+    for(int i = 1; i <= N; i++) {
+        for(int j = 1; j <= N; j++) {
+            cin >> num;
+            if(num == 1)
+                house.push_back(POS(j,i));
+            else if(num == 2)
+                pizza.push_back(POS(j,i));
+        }
+    }
+    //cout << "house cnt:" << house.size() << endl;
+    //cout << "pizza cnt:" << pizza.size() << endl;
+    vector<int> combination;
+    for(int i = 0; i < M; i++)
+        combination.push_back(1);
+    for(int i = 0; i < pizza.size()-M; i++)
+        combination.push_back(0);
+    sort(combination.begin(), combination.end());
+    //cout << "combi size:" << combination.size() << endl;
+    
+    int minSum = INT_MAX;
+    do
+    {
+        vector<POS> selectedPizza;
+        for(int i = 0; i < combination.size(); i++)
+        {
+            if(combination[i] == 1)
+            {
+                selectedPizza.push_back(pizza[i]);
+            }
+        }
+        
+        int sum = 0;
+        for(int i = 0; i < house.size(); i++)
+        {
+            int minDis = INT_MAX;
+            for(int j = 0; j < selectedPizza.size(); j++)
+            {
+                int dis    = calcDistance(house[i], selectedPizza[j]);
+                minDis = min(minDis, dis);
+            }
+            sum += minDis;
+        }
+        minSum = min(minSum, sum);
+    }while(next_permutation(combination.begin(), combination.end()));
+    
+    cout << minSum << endl;
+    return 0;
 }
