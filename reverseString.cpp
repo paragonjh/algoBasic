@@ -20,6 +20,6 @@ int main() {
 	char* resultStr = reverseStr(str, strlen(str));
 	cout << str << endl;
 	cout << resultStr << endl;
-	delete resultStr;
+	delete[] resultStr;
 	return 0;
 }
