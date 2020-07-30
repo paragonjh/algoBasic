@@ -15,22 +15,22 @@ void selectionSort(int* arr, int len)
 	{
 		for(int j = i+1; j < len; j++)
 		{
-			if(arr[i] > arr[j]) {
-				swap(&arr[i], &arr[j]);
-			}
+			int minValIndex = i;
+			if(arr[minValIndex] > arr[j])
+				minValIndex = j;
+			if(minValIndex != i)
+				swap(&arr[i], &arr[minValIndex]);
 		}
-	}	
+	}
 }
 
 int main() {
 	// your code goes here
-	int *arr = new int[5];
-	for(int i = 0; i < 5; i++)
-		arr[i] = 5-i;
-	
+	int arr[] = {5,4,3,2,1};
 	selectionSort(arr,5);
-
 	for(int i = 0; i < 5; i++)
+	{
 		cout << arr[i] << " ";
+	}
 	return 0;
 }
