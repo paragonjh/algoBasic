@@ -6,6 +6,7 @@ class Node
 public:
 	int data;
 	Node* nextNode;
+	Node(int _data) : data(_data), nextNode(nullptr) {}
 };
 
 class LinkedList
@@ -54,15 +55,15 @@ public:
 	{
 		if(size == 0)
 		{
-			head = new Node;
-			head->data = data;
-			head->nextNode = nullptr;
+			head = new Node(data);
+			//head->data = data;
+			//head->nextNode = nullptr;
 		}
 		else
 		{
-			Node *newNode = new Node;
-			newNode->data = data;
-			newNode->nextNode = nullptr;
+			Node *newNode = new Node(data);
+			//newNode->data = data;
+			//newNode->nextNode = nullptr;
 			
 			Node *itor = head;
 			while(itor->nextNode != nullptr)
