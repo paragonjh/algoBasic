@@ -10,20 +10,46 @@ public:
 
 class LinkedList
 {
+private:
+	int size;
+	Node* head;
+
 public:
-	LinkedList() {
+	LinkedList()
+	{
 		size = 0;
+		head = nullptr;
 	}
-	~LinkedList() {
+	~LinkedList()
+	{
+		/*
+		if(size > 0)
+		{
+			Node *itor = head;
+			for(int i = 0; i < size; i++)
+			{
+				Node *deleteNode = itor;
+				itor = itor->nextNode;
+				delete deleteNode;
+			}
+		}
+		head = nullptr;
+		size = 0;
+		*/
+	}
+	int getSize() { return size; }
+
+	void printNode()
+	{
 		Node *itor = head;
 		for(int i = 0; i < size; i++)
 		{
-			Node *nextNode = itor->nextNode;
-			delete itor;
-			itor = nextNode;
+			cout << itor->data << " ";
+			itor = itor->nextNode;
 		}
-		size = 0;
-	}a
+		cout << endl;
+	}
+
 	void addNode(int data)
 	{
 		if(size == 0)
@@ -34,74 +60,69 @@ public:
 		}
 		else
 		{
-			Node *nextNode = new Node;
-			nextNode->data = data;
-			nextNode->nextNode = nullptr;
+			Node *newNode = new Node;
+			newNode->data = data;
+			newNode->nextNode = nullptr;
 			
 			Node *itor = head;
 			while(itor->nextNode != nullptr)
+			{
 				itor = itor->nextNode;
-			itor->nextNode = nextNode;
+			}
+			itor->nextNode = newNode;
 		}
 		size++;
 	}
 	
-	void deleteNode(int index)
+	void deleteNode(int data)
 	{
-		if(index > size-1 || index < 0)
-			return;
-		Node *deleteNode;
-		Node *tempNode = head;
-		Node *itor = head;
-		if(index == 0)
+		if(size == 0) return;
+		
+		Node* itor = head;
+		Node* prevNode = nullptr;
+		
+		if(head->data == data)
 		{
-			head = head->nextNode;
-			deleteNode = tempNode;
+			Node* tempNode = head;
+			head = tempNode->nextNode;
+			delete tempNode;
+			size--;
 		}
 		else
 		{
-		    for(int i = 0; i < index-1; i++)
-		    {
+			prevNode = head;
+			Node *itor = head->nextNode;
+			for(int i = 0; i < size-1; i++)
+			{
+				if(itor->data == data)
+				{
+					prevNode->nextNode = itor->nextNode;
+					delete itor;
+					size--;
+					break;
+				}
 				itor = itor->nextNode;
 			}
-			Node *deleteNode = itor->nextNode;
-			Node *swapNode = deleteNode->nextNode;
-			itor->nextNode = swapNode;
 		}
-		delete deleteNode;
-		size--;
 	}
-	
-	int getSize(void){ return size; }
-	void printData()
-	{
-		Node* itor = head;
-
-		for(int i = 0; i < size; i++)
-		{
-			cout << itor->data <<" ";
-			itor = itor->nextNode; 
-		}
-		cout << endl;
-	}
-private:
-	int size;
-	Node* head;
 };
 
 int main() {
 	// your code goes here
-		// your code goes here
 	LinkedList li;
 	
 	li.addNode(1);
 	li.addNode(2);
 	li.addNode(3);
-	li.printData();
-	cout <<"size:"<< li.getSize() << endl;
-	cout <<"==========" << endl;
+	cout << "Node Size:" << li.getSize() << endl;
+	li.printNode();
+	
 	li.deleteNode(1);
-	li.printData();
-	cout <<"size:"<< li.getSize() << endl;
+	cout << "Node Size:" << li.getSize() << endl;
+	li.printNode();
+	
+	li.deleteNode(3);
+	cout << "Node Size:" << li.getSize() << endl;
+	li.printNode();
 	return 0;
 }
